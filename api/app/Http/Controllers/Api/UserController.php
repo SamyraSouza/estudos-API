@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateUserRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 
@@ -15,15 +16,24 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate();
+
         return UserResource::collection($users);
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUpdateUserRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $data['password'] =bcrypt($request->password);
+
+        $user = User::create($data);
+
+       return new UserResource($user);
+
     }
 
     /**
@@ -31,7 +41,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+       
     }
 
     /**
