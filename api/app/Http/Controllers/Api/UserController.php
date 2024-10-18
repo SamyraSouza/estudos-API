@@ -6,8 +6,6 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateUserRequest;
 use App\Http\Resources\UserResource;
-use Illuminate\Http\Client\ResponseSequence;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class UserController extends Controller
@@ -54,7 +52,7 @@ class UserController extends Controller
     //    if(!$user){
     //     return response()->json(['message' => "user not found"], 404);
     //    }
-    $user =$this->repository->findOrFail($id);
+    $user = $this->repository->findOrFail($id);
 
     return new UserResource($user);
     }
